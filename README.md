@@ -65,7 +65,7 @@ This project demonstrates a progressive implementation approach, starting with b
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/uber-matching-system.git
+git clone https://github.com/SaiDhiren-Musaloji/uber-matching-system.git
 cd uber-matching-system
 
 # Install dependencies
@@ -259,7 +259,8 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 *SaiDhiren Musaloji*
 - GitHub: [@SaiDhiren-Musaloji](https://github.com/SaiDhiren-Musaloji)
-- Email: your.email@example.com
+- Email: musalojidhiren@gmail.com
+
 
 ---
 
