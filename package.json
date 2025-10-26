@@ -1,0 +1,53 @@
+{
+  "name": "uber-matching-system",
+  "version": "1.0.0",
+  "description": "Real-time driver matching system with PostgreSQL, Redis, distributed locking, and WebSockets",
+  "main": "src/server-postgresql.js",
+  "scripts": {
+    "start": "node src/server-postgresql.js",
+    "dev": "nodemon src/server-postgresql.js",
+    "start-locks": "node src/server-redis-locks.js",
+    "start-websockets": "node src/server-websockets.js",
+    "start-minimal": "node src/server-minimal.js",
+    "setup-postgresql": "node scripts/setup-postgresql.js",
+    "seed-postgresql": "node scripts/seed-postgresql.js",
+    "setup-redis": "node scripts/setup-redis.js",
+    "setup-locks": "node scripts/setup-locks.js",
+    "seed-locks": "node scripts/seed-locks.js",
+    "setup-websockets": "node scripts/setup-websockets.js",
+    "seed-websockets": "node scripts/seed-websockets.js",
+    "test": "echo 'Manual testing with curl commands'",
+    "benchmark-postgresql": "node scripts/benchmark-postgresql.js",
+    "test-concurrent-locks": "node scripts/test-concurrent-locks.js",
+    "test-websockets": "node scripts/test-websockets.js"
+  },
+  "keywords": [
+    "uber",
+    "matching",
+    "real-time",
+    "geospatial",
+    "postgresql",
+    "redis",
+    "distributed-locking",
+    "websockets",
+    "system-design"
+  ],
+  "author": "SaiDhiren Musaloji",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.12.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "pg": "^8.11.3",
+    "redis": "^5.9.0",
+    "ws": "^8.18.0",
+    "jsonwebtoken": "^9.0.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
