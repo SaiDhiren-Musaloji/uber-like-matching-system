@@ -1,6 +1,6 @@
 # Real-Time Driver Matching System
 
-A production-ready Uber-like system that matches riders with nearby drivers in real-time, demonstrating progressive implementation of system design concepts.
+A production-ready Uber-like system that matches riders with nearby drivers in real-time. This project demonstrates progressive implementation of system design concepts, starting from basic database operations and evolving into a sophisticated real-time platform.
 
 ## Features
 
@@ -13,7 +13,7 @@ A production-ready Uber-like system that matches riders with nearby drivers in r
 
 ## Architecture Progression
 
-This project demonstrates a progressive implementation approach, starting with basic functionality and evolving into a production-ready system:
+This project demonstrates a progressive implementation approach, starting with basic functionality and evolving into a production-ready system. Each implementation builds upon the previous one, showing how to scale from simple database queries to complex real-time systems.
 
 ### 1. PostgreSQL Implementation (`server-postgresql.js`)
 - Basic REST API with CRUD operations
@@ -56,25 +56,27 @@ This project demonstrates a progressive implementation approach, starting with b
 ## Quick Start
 
 ### Prerequisites
-- Node.js 18+
-- Docker & Docker Compose
-- PostgreSQL 13+
-- Redis 6+
+
+Before getting started, make sure you have the following installed:
+- Node.js 18 or higher
+- Docker and Docker Compose
+- PostgreSQL 13 or higher
+- Redis 6 or higher
 
 ### Installation
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/uber-matching-system.git
+git clone https://github.com/SaiDhiren-Musaloji/uber-matching-system.git
 cd uber-matching-system
 
 # Install dependencies
 npm install
 
-# Start infrastructure
+# Start the required services
 docker-compose up -d
 
-# Setup database (choose implementation)
+# Choose your implementation and run setup
 npm run setup-postgresql    # Basic PostgreSQL setup
 npm run setup-redis        # Redis optimization
 npm run setup-locks        # Distributed locking
@@ -83,6 +85,8 @@ npm run setup-websockets   # Full WebSocket implementation
 
 ### Running Different Implementations
 
+You can run different versions of the system depending on what you want to explore:
+
 ```bash
 # Basic PostgreSQL implementation
 npm start
@@ -90,10 +94,10 @@ npm start
 # With Redis optimization and distributed locking
 npm run start-locks
 
-# Full WebSocket implementation
+# Full WebSocket implementation with real-time features
 npm run start-websockets
 
-# Minimal implementation
+# Minimal implementation for testing
 npm run start-minimal
 ```
 
@@ -125,6 +129,8 @@ GET /api/bookings/:id
 
 ### WebSocket Events (Full Implementation)
 
+The WebSocket implementation provides real-time communication between clients and the server:
+
 ```javascript
 // Connection
 ws://localhost:3000/ws?user_type=rider&user_id=1&token=abc123
@@ -143,14 +149,16 @@ ws://localhost:3000/ws?user_type=rider&user_id=1&token=abc123
 
 ## Testing
 
+The project includes comprehensive testing scripts for each implementation:
+
 ```bash
-# Test PostgreSQL implementation
+# Test PostgreSQL implementation performance
 npm run benchmark-postgresql
 
-# Test distributed locking
+# Test distributed locking under concurrent load
 npm run test-concurrent-locks
 
-# Test WebSocket functionality
+# Test WebSocket functionality and real-time features
 npm run test-websockets
 
 # Manual API testing
@@ -175,22 +183,22 @@ curl "http://localhost:3000/api/drivers/nearby?lat=40.7128&lng=-74.0060&radius=5
 
 ## Configuration
 
-Environment variables (`.env`):
+The system uses environment variables for configuration. Create a `.env` file in the root directory:
 
 ```env
-# Database
+# Database Configuration
 DB_HOST=localhost
 DB_PORT=5432
 DB_NAME=uber_matching
 DB_USER=postgres
 DB_PASSWORD=password
 
-# Redis
+# Redis Configuration
 REDIS_HOST=localhost
 REDIS_PORT=6379
 REDIS_PASSWORD=
 
-# Server
+# Server Configuration
 PORT=3000
 NODE_ENV=development
 ```
@@ -228,14 +236,18 @@ docs/
 
 ## Key Learning Concepts
 
-1. *Geospatial Indexing*: Redis GEO vs SQL proximity queries
+This project covers several important system design concepts:
+
+1. *Geospatial Indexing*: Understanding why Redis GEO is faster than SQL for location queries
 2. *Distributed Locking*: Preventing race conditions in concurrent systems
-3. *Event-Driven Architecture*: Decoupled, scalable system design
-4. *Real-Time Communication*: WebSocket implementation patterns
+3. *Event-Driven Architecture*: Building decoupled, scalable system design
+4. *Real-Time Communication*: Implementing WebSocket patterns for instant updates
 5. *Performance Optimization*: Measuring and improving system performance
-6. *System Monitoring*: Metrics, logging, and observability
+6. *System Monitoring*: Implementing metrics, logging, and observability
 
 ## Production Considerations
+
+When deploying this system to production, consider these important aspects:
 
 - *Scalability*: Horizontal scaling with Redis clustering
 - *Reliability*: Circuit breakers and fallback mechanisms
@@ -245,7 +257,7 @@ docs/
 
 ## License
 
-MIT License - see [LICENSE](LICENSE) file for details.
+This project is open source and available under the [MIT License](LICENSE).
 
 ## Contributing
 
@@ -257,9 +269,8 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 ## Contact
 
-*SaiDhiren Musaloji*
+**SaiDhiren Musaloji**
 - GitHub: [@SaiDhiren-Musaloji](https://github.com/SaiDhiren-Musaloji)
-- Email: your.email@example.com
 
 ---
 
