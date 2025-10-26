@@ -2,7 +2,7 @@ const { createClient } = require('redis');
 require('dotenv').config();
 
 /**
- * Event Service (Week 4)
+ * Event Service
  * 
  * This module provides event-driven architecture using Redis Pub/Sub
  * for event broadcasting, subscription management, and event persistence.
@@ -127,7 +127,7 @@ const publishEvent = async (eventType, eventData, options = {}) => {
     const typeCount = eventStats.eventTypes.get(eventType) || 0;
     eventStats.eventTypes.set(eventType, typeCount + 1);
 
-    console.log(`📡 Event published: ${eventType} (ID: ${event.id})`);
+    console.log(`Event published: ${eventType} (ID: ${event.id})`);
     return event;
 
   } catch (error) {
@@ -164,7 +164,7 @@ const subscribeToEvent = async (eventType, handler, options = {}) => {
     subscriptions.get(eventType).add(handler);
     eventStats.subscriptions++;
 
-    console.log(`📡 Subscribed to event: ${eventType}`);
+    console.log(`Subscribed to event: ${eventType}`);
     return true;
 
   } catch (error) {
@@ -191,7 +191,7 @@ const unsubscribeFromEvent = async (eventType, handler) => {
       }
       
       eventStats.subscriptions--;
-      console.log(`📡 Unsubscribed from event: ${eventType}`);
+      console.log(`Unsubscribed from event: ${eventType}`);
     }
   } catch (error) {
     console.error(` Error unsubscribing from event ${eventType}:`, error);

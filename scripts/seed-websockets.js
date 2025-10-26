@@ -29,7 +29,7 @@ const seedWeek4 = async () => {
     await pool.query('DELETE FROM system_metrics');
     
     // Seed notification preferences
-    console.log('📱 Seeding notification preferences...');
+    console.log('Seeding notification preferences...');
     const notificationPreferences = [
       // Rider preferences
       { user_type: 'rider', user_id: 1, notification_type: 'booking_assigned', enabled: true, channels: ['websocket', 'push'] },

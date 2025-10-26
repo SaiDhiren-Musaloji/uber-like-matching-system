@@ -55,7 +55,7 @@ const {
 const {
   initializeRedis: initQueueRedis,
   enqueue,
-  process,
+  process: processQueue,
   getQueueStats,
   getQueueHealth,
   closeQueueService
@@ -77,34 +77,34 @@ const {
 } = require('./monitoringService');
 
 /**
- * Week 4: Real-time Communication & Event-Driven Architecture
+ * Real-time Communication & Event-Driven Architecture Server
  * 
- * Learning Objectives:
- * 1. Implement WebSocket server for real-time communication
- * 2. Create event-driven architecture with Redis Pub/Sub
- * 3. Build message queue system for reliable processing
- * 4. Add comprehensive system monitoring
- * 5. Integrate all services for production-ready system
+ * Features:
+ * 1. WebSocket server for real-time communication
+ * 2. Event-driven architecture with Redis Pub/Sub
+ * 3. Message queue system for reliable processing
+ * 4. Comprehensive system monitoring
+ * 5. Integrated services for production-ready system
  */
 
 const app = express();
 const server = http.createServer(app);
-const PORT = process.env.PORT || 3000;
+const PORT = (process.env && process.env.PORT) || 3001;
 
 // Database connection
 const pool = new Pool({
-  host: process.env.DB_HOST || 'localhost',
-  port: process.env.DB_PORT || 5432,
-  database: process.env.DB_NAME || 'uber_matching',
-  user: process.env.DB_USER || 'postgres',
-  password: process.env.DB_PASSWORD || 'password'
+  host: (process.env && process.env.DB_HOST) || 'localhost',
+  port: (process.env && process.env.DB_PORT) || 5432,
+  database: (process.env && process.env.DB_NAME) || 'uber_matching',
+  user: (process.env && process.env.DB_USER) || 'postgres',
+  password: (process.env && process.env.DB_PASSWORD) || 'password'
 });
 
 // Middleware
 app.use(cors());
 app.use(express.json());
 
-// Week 4: Request monitoring middleware
+// Request monitoring middleware
 app.use((req, res, next) => {
   const startTime = Date.now();
   
@@ -116,7 +116,7 @@ app.use((req, res, next) => {
   next();
 });
 
-// Basic validation middleware (inherited from Week 3)
+// Basic validation middleware
 const validateDriver = (req, res, next) => {
   const { name, phone } = req.body;
   
@@ -193,7 +193,7 @@ const validateBooking = (req, res, next) => {
 
 // Routes
 
-// Enhanced health check with Week 4 features
+// Enhanced health check with real-time features
 app.get('/api/health', async (req, res) => {
   try {
     const redisStatus = isRedisConnected() ? 'connected' : 'disconnected';
@@ -206,9 +206,9 @@ app.get('/api/health', async (req, res) => {
     
     res.json({
       success: true,
-      message: 'Week 4 API with Real-time Communication & Event-Driven Architecture',
+      message: 'Real-time Communication & Event-Driven Architecture API',
       timestamp: new Date().toISOString(),
-      version: '4.0.0',
+      version: '1.0.0',
       services: {
         postgres: 'connected',
         redis: redisStatus,
@@ -228,7 +228,7 @@ app.get('/api/health', async (req, res) => {
   }
 });
 
-// Week 4: System monitoring endpoints
+// System monitoring endpoints
 app.get('/api/metrics', async (req, res) => {
   try {
     const metrics = getSystemMetrics();
@@ -267,7 +267,7 @@ app.get('/api/health/detailed', async (req, res) => {
   }
 });
 
-// Week 4: WebSocket statistics
+// WebSocket statistics
 app.get('/api/websocket/stats', async (req, res) => {
   try {
     const stats = getConnectionStats();
@@ -300,7 +300,7 @@ app.get('/api/websocket/connections', async (req, res) => {
   }
 });
 
-// Week 4: Event system statistics
+// Event system statistics
 app.get('/api/events/stats', async (req, res) => {
   try {
     const stats = getEventStats();
@@ -317,7 +317,7 @@ app.get('/api/events/stats', async (req, res) => {
   }
 });
 
-// Week 4: Queue system statistics
+// Queue system statistics
 app.get('/api/queue/stats', async (req, res) => {
   try {
     const stats = getQueueStats();
@@ -365,7 +365,7 @@ app.get('/api/queue/health', async (req, res) => {
   }
 });
 
-// Week 2 Routes (inherited with monitoring)
+// Driver management routes with monitoring
 
 // Get all drivers
 app.get('/api/drivers', async (req, res) => {
@@ -390,7 +390,7 @@ app.get('/api/drivers', async (req, res) => {
   }
 });
 
-// Find nearby drivers (Week 2: Optimized with Redis Geo)
+// Find nearby drivers (Optimized with Redis Geo)
 app.get('/api/drivers/nearby', async (req, res) => {
   const startTime = Date.now();
   try {
@@ -566,7 +566,7 @@ app.post('/api/drivers', validateDriver, async (req, res) => {
     );
     recordDatabaseQuery(Date.now() - startTime);
     
-    // Week 4: Publish driver creation event
+    // Publish driver creation event
     await publishDriverEvent('created', result.rows[0]);
     
     res.status(201).json({
@@ -593,7 +593,7 @@ app.post('/api/drivers', validateDriver, async (req, res) => {
   }
 });
 
-// Update driver location (Week 2: Dual-write to PostgreSQL and Redis)
+// Update driver location (Dual-write to PostgreSQL and Redis)
 app.post('/api/drivers/:id/location', validateLocation, async (req, res) => {
   const startTime = Date.now();
   try {
@@ -628,14 +628,14 @@ app.post('/api/drivers/:id/location', validateLocation, async (req, res) => {
       }
     }
     
-    // Week 4: Publish location update event
+    // Publish location update event
     await publishDriverEvent('location_updated', {
       ...driver,
       lat,
       lng
     });
     
-    // Week 4: Broadcast location update via WebSocket
+    // Broadcast location update via WebSocket
     broadcastToUser('driver', id, {
       type: 'location_update',
       data: {
@@ -690,10 +690,10 @@ app.patch('/api/drivers/:id/status', async (req, res) => {
       });
     }
     
-    // Week 4: Publish status change event
+    // Publish status change event
     await publishDriverEvent('status_changed', result.rows[0]);
     
-    // Week 4: Broadcast status update via WebSocket
+    // Broadcast status update via WebSocket
     broadcastToUser('driver', id, {
       type: 'status_update',
       data: {
@@ -719,7 +719,7 @@ app.patch('/api/drivers/:id/status', async (req, res) => {
   }
 });
 
-// Week 3 Routes: Booking System with Distributed Locking (Enhanced for Week 4)
+// Booking System with Distributed Locking (Enhanced with real-time features)
 
 // Create a new booking request
 app.post('/api/bookings', validateBooking, async (req, res) => {
@@ -729,10 +729,10 @@ app.post('/api/bookings', validateBooking, async (req, res) => {
     recordDatabaseQuery(Date.now() - startTime);
     
     if (result.success) {
-      // Week 4: Publish booking creation event
+      // Publish booking creation event
       await publishBookingEvent('created', result.data);
       
-      // Week 4: Broadcast to rider
+      // Broadcast to rider
       broadcastToUser('rider', req.body.rider_id, {
         type: 'booking_created',
         data: {
@@ -743,7 +743,7 @@ app.post('/api/bookings', validateBooking, async (req, res) => {
         }
       });
       
-      // Week 4: Enqueue booking processing task
+      // Enqueue booking processing task
       await enqueue('booking_queue', {
         type: 'process_new_booking',
         booking_id: result.data.id,
@@ -782,10 +782,10 @@ app.post('/api/bookings/:id/assign', async (req, res) => {
     recordDatabaseQuery(Date.now() - startTime);
     
     if (result.success) {
-      // Week 4: Publish booking assignment event
+      // Publish booking assignment event
       await publishBookingEvent('assigned', result.booking);
       
-      // Week 4: Broadcast to both rider and driver
+      // Broadcast to both rider and driver
       broadcastToUser('rider', result.booking.rider_id, {
         type: 'booking_assigned',
         data: {
@@ -854,10 +854,10 @@ app.post('/api/bookings/:id/accept', async (req, res) => {
     recordDatabaseQuery(Date.now() - startTime);
     
     if (result.success) {
-      // Week 4: Publish booking acceptance event
+      // Publish booking acceptance event
       await publishBookingEvent('accepted', result.booking);
       
-      // Week 4: Broadcast to rider
+      // Broadcast to rider
       broadcastToUser('rider', result.booking.rider_id, {
         type: 'booking_accepted',
         data: {
@@ -916,10 +916,10 @@ app.post('/api/bookings/:id/cancel', async (req, res) => {
     recordDatabaseQuery(Date.now() - startTime);
     
     if (result.success) {
-      // Week 4: Publish booking cancellation event
+      // Publish booking cancellation event
       await publishBookingEvent('cancelled', result.booking);
       
-      // Week 4: Broadcast cancellation
+      // Broadcast cancellation
       broadcastToUser('rider', result.booking.rider_id, {
         type: 'booking_cancelled',
         data: {
@@ -983,10 +983,10 @@ app.post('/api/bookings/:id/complete', async (req, res) => {
     recordDatabaseQuery(Date.now() - startTime);
     
     if (result.success) {
-      // Week 4: Publish ride completion event
+      // Publish ride completion event
       await publishBookingEvent('completed', result.booking);
       
-      // Week 4: Broadcast completion to both parties
+      // Broadcast completion to both parties
       broadcastToUser('rider', result.booking.rider_id, {
         type: 'ride_completed',
         data: {
@@ -1154,7 +1154,7 @@ const startServer = async () => {
     await initializeMonitoring();
     console.log(' Monitoring service initialized');
     
-    // Initialize Redis (Week 2)
+    // Initialize Redis for geospatial operations
     try {
       await initializeRedis();
       setRedisConnectionStatus(true);
@@ -1164,7 +1164,7 @@ const startServer = async () => {
       console.warn('  Redis connection failed, will use SQL fallback:', redisError.message);
     }
     
-    // Initialize Redis for locking (Week 3)
+    // Initialize Redis for distributed locking
     try {
       await initLockRedis();
       console.log(' Connected to Redis for distributed locking');
@@ -1172,16 +1172,18 @@ const startServer = async () => {
       console.warn('  Redis locking connection failed:', lockRedisError.message);
     }
     
-    // Week 4: Initialize WebSocket service
+    // Initialize WebSocket service
     try {
-      await initWebSocketRedis();
+      // Pass the existing Redis client to WebSocket service to avoid conflicts
+      const existingRedisClient = isRedisConnected() ? require('./redisClient').getRedisClient() : null;
+      await initWebSocketRedis(existingRedisClient);
       initializeWebSocketServer(server);
       console.log(' WebSocket server initialized');
     } catch (wsError) {
       console.warn('  WebSocket service failed:', wsError.message);
     }
     
-    // Week 4: Initialize Event service
+    // Initialize Event service
     try {
       await initEventRedis();
       console.log(' Event service initialized');
@@ -1219,23 +1221,23 @@ const startServer = async () => {
       console.warn('  Event service failed:', eventError.message);
     }
     
-    // Week 4: Initialize Queue service
+    // Initialize Queue service
     try {
       await initQueueRedis();
       console.log(' Queue service initialized');
       
       // Start queue processors
-      process('booking_queue', async (message) => {
+      processQueue('booking_queue', async (message) => {
         console.log(' Processing booking:', message.data);
         // Process booking logic here
       });
       
-      process('notification_queue', async (message) => {
-        console.log('📱 Processing notification:', message.data);
+      processQueue('notification_queue', async (message) => {
+        console.log('Processing notification:', message.data);
         // Send push notifications here
       });
       
-      process('analytics_queue', async (message) => {
+      processQueue('analytics_queue', async (message) => {
         console.log(' Processing analytics:', message.data);
         // Process analytics data here
       });
@@ -1248,21 +1250,21 @@ const startServer = async () => {
       const redisInfo = isRedisConnected() ? ' Connected' : ' Not connected (fallback to SQL)';
       
       console.log(`
- Week 4 API Server Started!
+Real-time Communication & Event-Driven Architecture Server Started!
 
 Server running on: http://localhost:${PORT}
- Health check: http://localhost:${PORT}/api/health
- WebSocket endpoint: ws://localhost:${PORT}/ws
+Health check: http://localhost:${PORT}/api/health
+WebSocket endpoint: ws://localhost:${PORT}/ws
 
- Week 4 Learning Objectives:
-   WebSocket server for real-time communication
-   Event-driven architecture with Redis Pub/Sub
-   Message queue system for reliable processing
-   Comprehensive system monitoring
-   Production-ready real-time system
+Features:
+  WebSocket server for real-time communication
+  Event-driven architecture with Redis Pub/Sub
+  Message queue system for reliable processing
+  Comprehensive system monitoring
+  Production-ready real-time system
 
  API Endpoints:
-  • Week 2 Endpoints (inherited):
+  • Driver Management:
     - GET /api/drivers - Get all drivers
     - GET /api/drivers/:id - Get driver by ID
     - POST /api/drivers - Create driver
@@ -1270,7 +1272,7 @@ Server running on: http://localhost:${PORT}
     - GET /api/drivers/nearby - Find nearby drivers (FAST with Redis!)
     - PATCH /api/drivers/:id/status - Update status
 
-  • Week 3 Endpoints (inherited):
+  • Booking System:
     - POST /api/bookings - Create booking request
     - POST /api/bookings/:id/assign - Assign driver (atomic)
     - POST /api/bookings/:id/accept - Driver accepts booking (atomic)
@@ -1280,7 +1282,7 @@ Server running on: http://localhost:${PORT}
     - GET /api/users/:user_id/bookings - Get user bookings
     - GET /api/locks/stats - Get lock statistics
 
-  • Week 4 New Endpoints:
+  • Real-time & Monitoring:
     - GET /api/metrics - System metrics
     - GET /api/health/detailed - Detailed health check
     - GET /api/websocket/stats - WebSocket statistics
@@ -1290,12 +1292,12 @@ Server running on: http://localhost:${PORT}
     - GET /api/queue/health - Queue health status
 
  Service Status:
-  • PostgreSQL:  Connected
+  • PostgreSQL: Connected
   • Redis: ${redisInfo}
-  • WebSocket:  Active
-  • Events:  Active
-  • Queues:  Active
-  • Monitoring:  Active
+  • WebSocket: Active
+  • Events: Active
+  • Queues: Active
+  • Monitoring: Active
 
  Test the API:
   curl http://localhost:${PORT}/api/health

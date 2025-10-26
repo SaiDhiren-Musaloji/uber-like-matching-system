@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 /**
- * WebSocket Service (Week 4)
+ * WebSocket Service
  * 
  * This module provides real-time bidirectional communication using WebSockets
  * with authentication, room management, and event broadcasting.
@@ -14,11 +14,17 @@ let redisClient = null;
 let wss = null;
 
 // Initialize Redis client for WebSocket operations
-const initializeRedis = async () => {
+const initializeRedis = async (existingClient = null) => {
   try {
+    if (existingClient) {
+      redisClient = existingClient;
+      console.log(' Using existing Redis client for WebSocket operations');
+      return redisClient;
+    }
+    
     if (!redisClient) {
       redisClient = createClient({
-        url: `redis://${process.env.REDIS_HOST || 'localhost'}:${process.env.REDIS_PORT || 6379}`,
+        url: `redis://${(process.env && process.env.REDIS_HOST) || 'localhost'}:${(process.env && process.env.REDIS_PORT) || 6379}`,
         socket: {
           reconnectStrategy: (retries) => {
             if (retries > 10) {
@@ -123,7 +129,7 @@ const joinRoom = (socket, roomName) => {
   
   socketRooms.get(socket.id).add(roomName);
   
-  console.log(`🔗 Socket ${socket.id} joined room: ${roomName}`);
+  console.log(`Socket ${socket.id} joined room: ${roomName}`);
 };
 
 /**
@@ -148,7 +154,7 @@ const leaveRoom = (socket, roomName) => {
     }
   }
   
-  console.log(`🔗 Socket ${socket.id} left room: ${roomName}`);
+  console.log(`Socket ${socket.id} left room: ${roomName}`);
 };
 
 /**
@@ -183,7 +189,7 @@ const broadcastToRoom = (roomName, message, excludeSocketId = null) => {
     }
   });
   
-  console.log(`📡 Broadcasted to room ${roomName}: ${sentCount} clients`);
+  console.log(`Broadcasted to room ${roomName}: ${sentCount} clients`);
 };
 
 /**
@@ -243,7 +249,7 @@ const handleMessage = async (socket, message) => {
     const data = JSON.parse(message);
     connectionStats.messagesReceived++;
     
-    console.log(`📨 Received message from ${socket.id}:`, data.type);
+    console.log(`Received message from ${socket.id}:`, data.type);
     
     switch (data.type) {
       case 'subscribe':

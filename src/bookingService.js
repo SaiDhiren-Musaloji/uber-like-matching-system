@@ -3,7 +3,7 @@ const { withLock, isLocked, getLockStats } = require('./lockService');
 require('dotenv').config();
 
 /**
- * Booking Service (Week 3)
+ * Booking Service
  * 
  * This module handles ride bookings with atomic operations and distributed locking
  * to prevent race conditions and double-bookings.

@@ -3,9 +3,9 @@ const axios = require('axios');
 require('dotenv').config();
 
 /**
- * Week 4 Real-time Testing Script
+ * Real-time Testing Script
  * 
- * This script tests the real-time features of Week 4 including
+ * This script tests the real-time features including
  * WebSocket connections, event broadcasting, message queues, and monitoring.
  */
 
@@ -413,7 +413,7 @@ const printTestResults = () => {
  * Main test function
  */
 const runTests = async () => {
-  console.log(' Starting Week 4 Real-time Testing...');
+  console.log(' Starting Real-time Testing...');
   console.log(` Testing server: ${BASE_URL}`);
   console.log(` WebSocket URL: ${WS_URL}`);
   console.log('');
@@ -440,11 +440,11 @@ const runTests = async () => {
 if (require.main === module) {
   runTests()
     .then(() => {
-      console.log('\n Week 4 real-time testing completed!');
+      console.log('\n Real-time testing completed!');
       process.exit(0);
     })
     .catch((error) => {
-      console.error('\n Week 4 real-time testing failed:', error);
+      console.error('\n Real-time testing failed:', error);
       process.exit(1);
     });
 }

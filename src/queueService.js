@@ -2,7 +2,7 @@ const { createClient } = require('redis');
 require('dotenv').config();
 
 /**
- * Message Queue Service (Week 4)
+ * Message Queue Service
  * 
  * This module provides reliable message processing using Redis as a message queue
  * with support for different queue types, priority handling, and error recovery.
@@ -60,7 +60,7 @@ const activeProcessors = new Map(); // queueName -> Set of processor IDs
 const initializeRedis = async () => {
   try {
     redisClient = createClient({
-      url: `redis://${process.env.REDIS_HOST || 'localhost'}:${process.env.REDIS_PORT || 6379}`,
+      url: `redis://${(process.env && process.env.REDIS_HOST) || 'localhost'}:${(process.env && process.env.REDIS_PORT) || 6379}`,
       socket: {
         reconnectStrategy: (retries) => {
           if (retries > 10) {
@@ -133,7 +133,7 @@ const enqueue = async (queueName, message, options = {}) => {
     queueStat.enqueued++;
     queueStats.queues.set(queueName, queueStat);
 
-    console.log(`📨 Message enqueued: ${queueName} (ID: ${queueMessage.id})`);
+    console.log(`Message enqueued: ${queueName} (ID: ${queueMessage.id})`);
     return queueMessage;
 
   } catch (error) {

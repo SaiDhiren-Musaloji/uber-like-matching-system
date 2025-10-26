@@ -2,7 +2,7 @@ const { createClient } = require('redis');
 require('dotenv').config();
 
 /**
- * Redis Client for Geospatial Operations (Week 2)
+ * Redis Client for Geospatial Operations
  * 
  * This module provides Redis GEO operations for fast proximity search.
  * It implements geospatial indexing using Redis GEO commands.

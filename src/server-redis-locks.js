@@ -135,7 +135,7 @@ app.get('/api/health', async (req, res) => {
   
   res.json({
     success: true,
-    message: 'Week 3 API with Distributed Locking & Concurrency Control',
+    message: 'Distributed Locking & Concurrency Control API',
     timestamp: new Date().toISOString(),
     version: '3.0.0',
     services: {
@@ -145,7 +145,7 @@ app.get('/api/health', async (req, res) => {
   });
 });
 
-// Week 2 Routes (inherited)
+// Driver management routes
 
 // Get all drivers
 app.get('/api/drivers', async (req, res) => {
@@ -166,7 +166,7 @@ app.get('/api/drivers', async (req, res) => {
   }
 });
 
-// Find nearby drivers (Week 2: Optimized with Redis Geo)
+// Find nearby drivers (Optimized with Redis Geo)
 app.get('/api/drivers/nearby', async (req, res) => {
   try {
     const { lat, lng, radius = 5 } = req.query;
@@ -354,7 +354,7 @@ app.post('/api/drivers', validateDriver, async (req, res) => {
   }
 });
 
-// Update driver location (Week 2: Dual-write to PostgreSQL and Redis)
+// Update driver location (Dual-write to PostgreSQL and Redis)
 app.post('/api/drivers/:id/location', validateLocation, async (req, res) => {
   try {
     const { id } = req.params;
@@ -441,7 +441,7 @@ app.patch('/api/drivers/:id/status', async (req, res) => {
   }
 });
 
-// Week 3 Routes: Booking System with Distributed Locking
+// Booking System with Distributed Locking
 
 // Create a new booking request
 app.post('/api/bookings', validateBooking, async (req, res) => {
@@ -739,7 +739,7 @@ const startServer = async () => {
     await pool.query('SELECT 1');
     console.log(' Connected to PostgreSQL database');
     
-    // Initialize Redis (Week 2)
+    // Initialize Redis for geospatial operations
     try {
       await initializeRedis();
       console.log(' Connected to Redis');
@@ -747,7 +747,7 @@ const startServer = async () => {
       console.warn('  Redis connection failed, will use SQL fallback:', redisError.message);
     }
     
-    // Initialize Redis for locking (Week 3)
+    // Initialize Redis for distributed locking
     try {
       await initLockRedis();
       console.log(' Connected to Redis for distributed locking');
@@ -759,19 +759,19 @@ const startServer = async () => {
       const redisInfo = isRedisConnected() ? ' Connected' : ' Not connected (fallback to SQL)';
       
       console.log(`
- Week 3 API Server Started!
+Distributed Locking & Concurrency Control Server Started!
 
 Server running on: http://localhost:${PORT}
- Health check: http://localhost:${PORT}/api/health
+Health check: http://localhost:${PORT}/api/health
 
- Week 3 Learning Objectives:
-   Redis-based distributed locking
-   Atomic booking operations
-   Race condition prevention
-   Concurrent request handling
+Features:
+  Redis-based distributed locking
+  Atomic booking operations
+  Race condition prevention
+  Concurrent request handling
 
  API Endpoints:
-  • Week 2 Endpoints (inherited):
+  • Driver Management:
     - GET /api/drivers - Get all drivers
     - GET /api/drivers/:id - Get driver by ID
     - POST /api/drivers - Create driver
@@ -779,7 +779,7 @@ Server running on: http://localhost:${PORT}
     - GET /api/drivers/nearby - Find nearby drivers (FAST with Redis!)
     - PATCH /api/drivers/:id/status - Update status
 
-  • Week 3 New Endpoints:
+  • Booking System:
     - POST /api/bookings - Create booking request
     - POST /api/bookings/:id/assign - Assign driver (atomic)
     - POST /api/bookings/:id/accept - Driver accepts booking (atomic)

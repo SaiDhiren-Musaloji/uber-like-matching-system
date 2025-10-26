@@ -5,7 +5,7 @@ const cors = require('cors');
 require('dotenv').config();
 
 /**
- * Minimal Week 4 Server for Testing
+ * Minimal Server for Testing
  */
 
 const app = express();
@@ -31,9 +31,9 @@ app.get('/api/health', async (req, res) => {
     await pool.query('SELECT 1');
     res.json({
       success: true,
-      message: 'Week 4 Minimal API Server',
+      message: 'Minimal API Server',
       timestamp: new Date().toISOString(),
-      version: '4.0.0-minimal',
+      version: '1.0.0-minimal',
       services: {
         postgres: 'connected',
         redis: 'not_connected',
@@ -78,12 +78,12 @@ const startServer = async () => {
     
     server.listen(PORT, () => {
       console.log(`
- Week 4 Minimal Server Started!
+Minimal Server Started!
 
 Server running on: http://localhost:${PORT}
- Health check: http://localhost:${PORT}/api/health
+Health check: http://localhost:${PORT}/api/health
 
- This is a minimal version for testing
+This is a minimal version for testing
       `);
     });
   } catch (error) {

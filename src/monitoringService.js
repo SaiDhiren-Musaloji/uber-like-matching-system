@@ -3,7 +3,7 @@ const { Pool } = require('pg');
 require('dotenv').config();
 
 /**
- * Monitoring Service (Week 4)
+ * Monitoring Service
  * 
  * This module provides comprehensive system monitoring, metrics collection,
  * and health checks for the Uber matching system.

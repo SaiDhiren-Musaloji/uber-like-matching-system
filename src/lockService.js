@@ -3,7 +3,7 @@ const crypto = require('crypto');
 require('dotenv').config();
 
 /**
- * Distributed Lock Service (Week 3)
+ * Distributed Lock Service
  * 
  * This module provides Redis-based distributed locking to prevent race conditions
  * and ensure atomic operations in a distributed system.
@@ -182,7 +182,7 @@ const extendLock = async (resource, lockId, additionalSeconds = 30) => {
     });
     
     if (result === 1) {
-      console.log(`⏰ Lock extended: ${resource} (ID: ${lockId}) by ${additionalSeconds}s`);
+      console.log(`Lock extended: ${resource} (ID: ${lockId}) by ${additionalSeconds}s`);
       return { success: true };
     } else {
       return { 
