@@ -65,7 +65,7 @@ This project demonstrates a progressive implementation approach, starting with b
 
 ```bash
 # Clone the repository
-git clone https://github.com/SaiDhiren-Musaloji/uber-matching-system.git
+git clone https://github.com/SaiDhiren-Musaloji/uber-like-matching-system.git
 cd uber-matching-system
 
 # Install dependencies
