@@ -47,7 +47,7 @@ async function setupPostgreSQL() {
     console.log(' Indexes created successfully');
     
     console.log(`
-🎉 Week 1 database setup completed!
+ Week 1 database setup completed!
 
  Database structure:
   • drivers table with spatial columns

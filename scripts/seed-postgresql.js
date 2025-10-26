@@ -119,7 +119,7 @@ async function seedWeek1() {
     `);
     
     console.log(`
-🎉 Week 1 test data seeding completed!
+ Week 1 test data seeding completed!
 
  Database Statistics:
   • Total drivers: ${stats.rows[0].total_drivers}

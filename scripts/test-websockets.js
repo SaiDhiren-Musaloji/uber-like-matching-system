@@ -127,7 +127,7 @@ const sendTestMessage = (ws, user, messageType) => {
       connection.messagesSent++;
     }
     
-    console.log(`📤 Sent ${messageType}: ${user.user_type}:${user.user_id}`);
+    console.log(` Sent ${messageType}: ${user.user_type}:${user.user_id}`);
   } catch (error) {
     testStats.messages.errors++;
     console.error(` Error sending message:`, error);
@@ -203,7 +203,7 @@ const setupMessageHandlers = (ws, user) => {
         testStats.events[message.type]++;
       }
       
-      console.log(`📨 Received ${message.type}: ${user.user_type}:${user.user_id}`);
+      console.log(` Received ${message.type}: ${user.user_type}:${user.user_id}`);
       
       // Handle specific message types
       switch (message.type) {
@@ -220,7 +220,7 @@ const setupMessageHandlers = (ws, user) => {
           break;
           
         case 'location_update':
-          console.log(`📍 Location update for ${user.user_type}:${user.user_id}:`, message.data);
+          console.log(` Location update for ${user.user_type}:${user.user_id}:`, message.data);
           break;
       }
     } catch (error) {
@@ -270,7 +270,7 @@ const testHttpEndpoints = async () => {
  * Test booking flow with real-time updates
  */
 const testBookingFlow = async () => {
-  console.log('\n🚗 Testing booking flow with real-time updates...');
+  console.log('\n Testing booking flow with real-time updates...');
   
   try {
     // Create a booking
@@ -379,13 +379,13 @@ const printTestResults = () => {
   console.log(`  Closed: ${testStats.connections.closed}`);
   console.log(`  Success Rate: ${((testStats.connections.successful / testStats.connections.attempted) * 100).toFixed(1)}%`);
   
-  console.log('\n📨 Message Statistics:');
+  console.log('\n Message Statistics:');
   console.log(`  Sent: ${testStats.messages.sent}`);
   console.log(`  Received: ${testStats.messages.received}`);
   console.log(`  Errors: ${testStats.messages.errors}`);
   console.log(`  Delivery Rate: ${((testStats.messages.received / testStats.messages.sent) * 100).toFixed(1)}%`);
   
-  console.log('\n⚡ Performance Statistics:');
+  console.log('\n Performance Statistics:');
   console.log(`  Avg Connection Time: ${testStats.performance.avgConnectionTime.toFixed(1)}ms`);
   console.log(`  Avg Message Latency: ${testStats.performance.avgMessageLatency.toFixed(1)}ms`);
   
@@ -396,7 +396,7 @@ const printTestResults = () => {
     }
   });
   
-  console.log('\n🏆 Test Summary:');
+  console.log('\n Test Summary:');
   const successRate = (testStats.connections.successful / testStats.connections.attempted) * 100;
   const deliveryRate = testStats.messages.sent > 0 ? (testStats.messages.received / testStats.messages.sent) * 100 : 0;
   
@@ -414,7 +414,7 @@ const printTestResults = () => {
  */
 const runTests = async () => {
   console.log(' Starting Week 4 Real-time Testing...');
-  console.log(`📍 Testing server: ${BASE_URL}`);
+  console.log(` Testing server: ${BASE_URL}`);
   console.log(` WebSocket URL: ${WS_URL}`);
   console.log('');
   
@@ -440,7 +440,7 @@ const runTests = async () => {
 if (require.main === module) {
   runTests()
     .then(() => {
-      console.log('\n🎉 Week 4 real-time testing completed!');
+      console.log('\n Week 4 real-time testing completed!');
       process.exit(0);
     })
     .catch((error) => {

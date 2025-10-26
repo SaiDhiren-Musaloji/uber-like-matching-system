@@ -18,10 +18,10 @@ const pool = new Pool({
 
 const seedWeek4 = async () => {
   try {
-    console.log('🌱 Seeding Week 4 database with sample data...');
+    console.log(' Seeding Week 4 database with sample data...');
     
     // Clear existing data
-    console.log('🧹 Clearing existing data...');
+    console.log(' Clearing existing data...');
     await pool.query('DELETE FROM notification_preferences');
     await pool.query('DELETE FROM queue_messages');
     await pool.query('DELETE FROM websocket_sessions');
@@ -152,7 +152,7 @@ const seedWeek4 = async () => {
     }
     
     // Seed sample queue messages
-    console.log('📨 Seeding queue messages...');
+    console.log(' Seeding queue messages...');
     const queueMessages = [
       {
         message_id: 'msg_1704067200000_booking1',
@@ -323,7 +323,7 @@ const seedWeek4 = async () => {
 if (require.main === module) {
   seedWeek4()
     .then(() => {
-      console.log('🎉 Week 4 seeding completed successfully!');
+      console.log(' Week 4 seeding completed successfully!');
       process.exit(0);
     })
     .catch((error) => {

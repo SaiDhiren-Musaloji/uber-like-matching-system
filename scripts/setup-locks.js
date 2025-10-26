@@ -36,7 +36,7 @@ const setupWeek3 = async () => {
     console.log(' Connected to Redis');
     
     // Create riders table
-    console.log('\n📋 Creating riders table...');
+    console.log('\n Creating riders table...');
     await pool.query(`
       CREATE TABLE IF NOT EXISTS riders (
         id SERIAL PRIMARY KEY,
@@ -51,7 +51,7 @@ const setupWeek3 = async () => {
     console.log(' Riders table created');
     
     // Create bookings table
-    console.log('\n📋 Creating bookings table...');
+    console.log('\n Creating bookings table...');
     await pool.query(`
       CREATE TABLE IF NOT EXISTS bookings (
         id SERIAL PRIMARY KEY,
@@ -76,7 +76,7 @@ const setupWeek3 = async () => {
     console.log(' Bookings table created');
     
     // Create indexes for better performance
-    console.log('\n📋 Creating indexes...');
+    console.log('\n Creating indexes...');
     
     await pool.query(`
       CREATE INDEX IF NOT EXISTS idx_bookings_rider_id ON bookings(rider_id)
@@ -101,7 +101,7 @@ const setupWeek3 = async () => {
     console.log(' Indexes created');
     
     // Clear any existing locks in Redis
-    console.log('\n🧹 Cleaning up existing locks...');
+    console.log('\n Cleaning up existing locks...');
     const lockKeys = await redisClient.keys('lock:*');
     if (lockKeys.length > 0) {
       await redisClient.del(lockKeys);
@@ -159,7 +159,7 @@ const setupWeek3 = async () => {
       console.log(' Lua script atomic operation test failed');
     }
     
-    console.log('\n🎉 Week 3 setup completed successfully!');
+    console.log('\n Week 3 setup completed successfully!');
     console.log('\n What was created:');
     console.log('  • riders table - stores rider information');
     console.log('  • bookings table - stores booking requests and ride data');

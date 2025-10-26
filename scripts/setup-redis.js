@@ -62,7 +62,7 @@ async function setupWeek2() {
     const redisCount = await getDriverCount();
     
     console.log(`
-🎉 Week 2 setup completed!
+ Week 2 setup completed!
 
  Sync Results:
   • Total online drivers: ${result.rows.length}

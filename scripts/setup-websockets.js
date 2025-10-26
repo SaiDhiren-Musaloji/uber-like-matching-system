@@ -311,7 +311,7 @@ const setupWeek4 = async () => {
     console.log('  • get_system_performance() - Get current system performance');
     console.log('  • cleanup_old_data() - Clean up old data');
     console.log('');
-    console.log('⚡ New Triggers Created:');
+    console.log(' New Triggers Created:');
     console.log('  • booking_change_trigger - Notify on booking changes');
     console.log('  • driver_change_trigger - Notify on driver changes');
     console.log('');
@@ -337,7 +337,7 @@ const setupWeek4 = async () => {
 if (require.main === module) {
   setupWeek4()
     .then(() => {
-      console.log('🎉 Week 4 setup completed successfully!');
+      console.log(' Week 4 setup completed successfully!');
       process.exit(0);
     })
     .catch((error) => {

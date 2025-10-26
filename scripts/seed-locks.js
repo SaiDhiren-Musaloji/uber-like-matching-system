@@ -25,7 +25,7 @@ const redisClient = createClient({
 
 const seedWeek3 = async () => {
   try {
-    console.log('🌱 Starting Week 3 seeding...\n');
+    console.log(' Starting Week 3 seeding...\n');
     
     // Test database connection
     await pool.query('SELECT 1');
@@ -36,13 +36,13 @@ const seedWeek3 = async () => {
     console.log(' Connected to Redis');
     
     // Clear existing data
-    console.log('\n🧹 Clearing existing data...');
+    console.log('\n Clearing existing data...');
     await pool.query('DELETE FROM bookings');
     await pool.query('DELETE FROM riders');
     console.log(' Existing data cleared');
     
     // Insert sample riders
-    console.log('\n👥 Inserting sample riders...');
+    console.log('\n Inserting sample riders...');
     const riders = [
       { name: 'Alice Johnson', phone: '+1-555-0101', email: 'alice@example.com', rating: 4.8 },
       { name: 'Bob Smith', phone: '+1-555-0102', email: 'bob@example.com', rating: 4.5 },
@@ -65,10 +65,15 @@ const seedWeek3 = async () => {
     console.log(` Inserted ${riders.length} riders`);
     
     // Insert sample bookings
-    console.log('\n📋 Inserting sample bookings...');
+    console.log('\n Inserting sample bookings...');
+    
+    // Get the first 5 rider IDs for bookings
+    const riderResult = await pool.query('SELECT id FROM riders ORDER BY id LIMIT 5');
+    const riderIds = riderResult.rows.map(row => row.id);
+    
     const bookings = [
       {
-        rider_id: 1,
+        rider_id: riderIds[0],
         pickup_lat: 40.7128,
         pickup_lng: -74.0060,
         dropoff_lat: 40.7589,
@@ -78,7 +83,7 @@ const seedWeek3 = async () => {
         status: 'pending'
       },
       {
-        rider_id: 2,
+        rider_id: riderIds[1],
         pickup_lat: 40.7505,
         pickup_lng: -73.9934,
         dropoff_lat: 40.7614,
@@ -88,7 +93,7 @@ const seedWeek3 = async () => {
         status: 'pending'
       },
       {
-        rider_id: 3,
+        rider_id: riderIds[2],
         pickup_lat: 40.6892,
         pickup_lng: -74.0445,
         dropoff_lat: 40.7282,
@@ -98,7 +103,7 @@ const seedWeek3 = async () => {
         status: 'pending'
       },
       {
-        rider_id: 4,
+        rider_id: riderIds[3],
         pickup_lat: 40.7831,
         pickup_lng: -73.9712,
         dropoff_lat: 40.7505,
@@ -108,7 +113,7 @@ const seedWeek3 = async () => {
         status: 'pending'
       },
       {
-        rider_id: 5,
+        rider_id: riderIds[4],
         pickup_lat: 40.6782,
         pickup_lng: -73.9442,
         dropoff_lat: 40.6892,
@@ -139,7 +144,7 @@ const seedWeek3 = async () => {
     console.log(` Inserted ${bookings.length} bookings`);
     
     // Ensure we have some online drivers for testing
-    console.log('\n🚗 Ensuring drivers are online...');
+    console.log('\n Ensuring drivers are online...');
     const driverResult = await pool.query('SELECT id FROM drivers LIMIT 5');
     
     if (driverResult.rows.length > 0) {
@@ -155,7 +160,7 @@ const seedWeek3 = async () => {
     }
     
     // Clear any existing locks
-    console.log('\n🧹 Clearing existing locks...');
+    console.log('\n Clearing existing locks...');
     const lockKeys = await redisClient.keys('lock:*');
     if (lockKeys.length > 0) {
       await redisClient.del(lockKeys);
@@ -165,7 +170,7 @@ const seedWeek3 = async () => {
     }
     
     // Test data verification
-    console.log('\n🔍 Verifying seeded data...');
+    console.log('\n Verifying seeded data...');
     
     const riderCount = await pool.query('SELECT COUNT(*) FROM riders');
     const bookingCount = await pool.query('SELECT COUNT(*) FROM bookings');
@@ -176,7 +181,7 @@ const seedWeek3 = async () => {
     console.log(`  • Bookings: ${bookingCount.rows[0].count}`);
     console.log(`  • Online Drivers: ${onlineDriverCount.rows[0].count}`);
     
-    console.log('\n🎉 Week 3 seeding completed successfully!');
+    console.log('\n Week 3 seeding completed successfully!');
     console.log('\n Sample data created:');
     console.log('  • 10 riders with realistic names and phone numbers');
     console.log('  • 5 pending booking requests');

@@ -22,7 +22,7 @@ async function benchmarkProximitySearch() {
   const results = [];
   
   for (const coord of TEST_COORDINATES) {
-    console.log(`\n📍 Testing ${coord.name} (${coord.lat}, ${coord.lng})`);
+    console.log(`\n Testing ${coord.name} (${coord.lat}, ${coord.lng})`);
     
     const times = [];
     const successfulRequests = [];
@@ -109,7 +109,7 @@ async function runBenchmark() {
   • Total successful requests: ${results.reduce((sum, r) => sum + r.successfulRequests, 0)}
   • Success rate: ${Math.round((results.reduce((sum, r) => sum + r.successfulRequests, 0) / (results.length * 10)) * 100)}%
 
-📍 Location-specific results:
+ Location-specific results:
 ${results.map(r => 
   `  • ${r.location}: ${r.avgTime}ms avg, ${r.p95Time}ms p95`
 ).join('\n')}

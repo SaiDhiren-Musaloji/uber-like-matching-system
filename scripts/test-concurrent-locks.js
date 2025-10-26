@@ -122,7 +122,7 @@ const testConcurrentBookings = async () => {
     }
   }
   
-  console.log(`📤 Sent ${CONCURRENT_REQUESTS} concurrent booking requests...`);
+  console.log(` Sent ${CONCURRENT_REQUESTS} concurrent booking requests...`);
   
   // Wait for all requests to complete
   const results = await Promise.all(promises);
@@ -183,7 +183,7 @@ const testConcurrentDriverAssignment = async (bookingIds) => {
     }
   }
   
-  console.log(`📤 Sent ${Math.min(CONCURRENT_REQUESTS, 5)} concurrent driver assignment requests for booking ${targetBookingId}...`);
+  console.log(` Sent ${Math.min(CONCURRENT_REQUESTS, 5)} concurrent driver assignment requests for booking ${targetBookingId}...`);
   
   // Wait for all requests to complete
   const results = await Promise.all(promises);
@@ -283,7 +283,7 @@ const runConcurrentTests = async () => {
     await testLockStatistics();
     
     console.log('\n' + '='.repeat(50));
-    console.log('🎉 Concurrent testing completed!');
+    console.log(' Concurrent testing completed!');
     console.log('\n Key takeaways:');
     console.log('  • Distributed locking prevents race conditions');
     console.log('  • Only one driver can be assigned to a booking');

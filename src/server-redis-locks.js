@@ -761,7 +761,7 @@ const startServer = async () => {
       console.log(`
  Week 3 API Server Started!
 
-📍 Server running on: http://localhost:${PORT}
+Server running on: http://localhost:${PORT}
  Health check: http://localhost:${PORT}/api/health
 
  Week 3 Learning Objectives:
